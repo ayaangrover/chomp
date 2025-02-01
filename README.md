@@ -9,28 +9,25 @@ The Chomp Recipe Manager API is an API built with Node.js and MongoDB that facil
 
 1. **Clone the Repository:**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/ayaangrover/chomp.git
    ```
 2. **Install Dependencies:**
    ```bash
-   cd <repository-directory>
+   cd chomp
    npm install
    ```
 3. **Environment Configuration:**
-   Create a `.env` file in the root directory and add the following variables:
+   Create a `.env` file in the root directory and add the following variable:
    ```env
-   MONGO_URI=your_mongodb_connection_string
-   PORT=3000
+   MONGO_URI=mongodb_connection_string
    ```
-   Adjust the `PORT` value as needed.
-
 ## Running the Server
 
 Start the API server with the following command:
 ```bash
-node <entry-file>.js
+node <file>.js
 ```
-Replace `<entry-file>.js` with the name of the main server file (e.g., `app.js` or `server.js`). The server will run on the port specified in your `.env` file or default to port 3000.
+Replace `<file>.js` with the name of the main server file (e.g., `app.js` or `server.js`). The server will run on the port specified in your `.env` file or default to port 3000.
 
 ## API Endpoints
 
