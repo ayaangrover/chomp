@@ -31,4 +31,4 @@ Replace `<file>.js` with the name of the main server file (e.g., `app.js` or `se
 
 ## AI Usage
 
-The readme was AI generated and human edited. The styling was made with AI to save time(high seas ends in a few hours!)
+The readme was AI generated and human edited. The styling was made with the assistance of AI to save time(high seas ends in a few hours!)
