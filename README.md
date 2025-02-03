@@ -4,6 +4,8 @@
 
 The Chomp Recipe Manager API is an API built with Node.js and MongoDB that facilitates the management of recipes, authors, and associated reviews. In addition, a sample web interface is provided to interact with the API. The service enables full CRUD operations.
 
+![Screenshot 2025-02-02 18 35 57](https://github.com/user-attachments/assets/ca85f8bc-000d-47c5-9272-65a2dd17009f)
+
 
 ## Installation
 
@@ -31,4 +33,4 @@ Replace `<file>.js` with the name of the main server file (e.g., `app.js` or `se
 
 ## AI Usage
 
-The readme was AI generated and human edited. The styling was made with the assistance of AI to save time(high seas ends in a few hours!)
+The readme was AI and human generated. AI was used as an assisant for this project.
