@@ -33,4 +33,4 @@ Replace `<file>.js` with the name of the main server file (e.g., `app.js` or `se
 
 ## AI Usage
 
-The readme was AI and human generated. AI was used as an assisant for this project.
+The readme was AI and human generated. AI was used as an assisant for this project. AI was used on the [docs](https://chomp.apidocumentation.com/), which were made with [Scalar](https://scalar.com/).
