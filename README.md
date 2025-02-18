@@ -9,3 +9,6 @@ The Chomp Recipe Manager API is an API built with Node.js and MongoDB. In additi
 ## AI Usage
 
 AI was used as an assisant for this project, mostly for quick styling(the webpage wasn't the focus of the project). AI was used on the [docs](https://chomp.apidocumentation.com/), which were made with [Scalar](https://scalar.com/).
+
+## Credits
+Photo by <a href="https://unsplash.com/@marekpiwnicki?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Marek Piwnicki</a> on <a href="https://unsplash.com/photos/a-forest-filled-with-lots-of-tall-trees-covered-in-snow-o2saEldPUPU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>

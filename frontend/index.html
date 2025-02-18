@@ -1,501 +1,571 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chomp - Recipe Manager</title>
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #007AFF;
-            --secondary-color: #5AC8FA;
-            --background-color: #F2F2F7;
-            --text-color: #000000;
-            --card-background: #FFFFFF;
-            --danger-color: #FF3B30;
-        }
-        body {
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.5;
-            margin: 0;
-            padding: 0;
-            background-color: var(--background-color);
-            color: var(--text-color);
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        header {
-            background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            text-align: center;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        h1 { margin: 0; font-size: 2.5rem; font-weight: 600; }
-        h2 {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-        .card {
-            background-color: var(--card-background);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
-        }
-        .card-content { padding: 1.5rem; }
-        .card h3 {
-            margin-top: 0;
-            color: var(--primary-color);
-            font-size: 1.25rem;
-        }
-        form {
-            background-color: var(--card-background);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        input, textarea, select {
-            width: 100%;
-            padding: 0.75rem;
-            margin-bottom: 1rem;
-            border: 1px solid #E5E5EA;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            transition: border-color 0.3s ease;
-        }
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-        button {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            font-weight: 600;
-        }
-        button:hover { 
-            background-color: #0056b3;
-            transform: translateY(-2px);
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-            backdrop-filter: blur(5px);
-        }
-        .modal-content {
-            background-color: var(--card-background);
-            margin: 15% auto;
-            padding: 2rem;
-            border-radius: 12px;
-            width: 80%;
-            max-width: 600px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-        .close:hover { color: #000; }
-        .review {
-            background-color: #F2F2F7;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-        .delete-btn {
-            background-color: var(--danger-color);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.875rem;
-            transition: all 0.3s ease;
-        }
-        .delete-btn:hover { 
-            background-color: #D70015;
-            transform: translateY(-2px);
-        }
-        .recipe-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .fade-in {
-            animation: fadeIn 0.3s ease-in;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chomp - Recipe Manager</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-border: rgba(255, 255, 255, 0.3);
+      --text-color: #ffffff;
+      --button-bg: rgba(255, 255, 255, 0.2);
+      --button-hover-bg: rgba(255, 255, 255, 0.3);
+      --indicator-color: rgba(255, 255, 255, 0.7);
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('wallpaper.jpg') no-repeat center center fixed;
+      background-size: cover;
+      background-repeat: no-repeat;
+      color: var(--text-color);
+      overflow-x: hidden;
+    }
+    input::placeholder,
+    textarea::placeholder {
+      color: #ffffff;
+      font-family: 'Poppins', sans-serif;
+    }
+    header {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      text-align: center;
+      padding: 2rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      margin-bottom: 20px;
+      border-radius: 24px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 600;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .tab-bar {
+      display: flex;
+      position: relative;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    .tab {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-color);
+      transition: transform 0.3s ease;
+      border-radius: 20px;
+    }
+    .tab:hover {
+      transform: translateY(-2px);
+    }
+    .tab-indicator {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 4px;
+      width: 0;
+      background-color: var(--indicator-color);
+      transition: all 0.3s ease;
+      border-radius: 4px;
+    }
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease-in;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
+    .card-content {
+      padding: 1.5rem;
+    }
+    .card h3 {
+      margin-top: 0;
+      font-size: 1.25rem;
+    }
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .user-btn {
+      width: 140px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      white-space: nowrap;
+    }
+    form {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 2rem;
+      border-radius: 24px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+      margin-bottom: 20px;
+    }
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-color);
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--text-color);
+    }
+    button {
+      background-color: var(--button-bg);
+      color: var(--text-color);
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      white-space: nowrap;
+    }
+    button:hover {
+      background-color: var(--button-hover-bg);
+      transform: translateY(-2px);
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+    .modal-content {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      margin: 10% auto;
+      padding: 2rem;
+      border-radius: 24px;
+      width: 80%;
+      max-width: 600px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    }
+    .close {
+      color: var(--text-color);
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .close:hover {
+      color: var(--text-color);
+    }
+    .review {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 16px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .delete-btn {
+      background-color: var(--button-bg);
+      color: var(--text-color);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 16px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      white-space: nowrap;
+    }
+    .delete-btn:hover {
+      background-color: var(--button-hover-bg);
+      transform: translateY(-2px);
+    }
+    .recipe-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .fade-in { animation: fadeIn 0.3s ease-in; }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Chomp</h1>
-        <p>Write, publish, and discover delicious meals</p>
-    </header>
-
-    <div class="container">
+  <header>
+    <h1>Chomp</h1>
+    <p>Write, publish, and discover delicious meals</p>
+  </header>
+  <div class="container">
+    <div class="tab-bar">
+      <button class="tab active" data-tab="recipes">Recipes</button>
+      <button class="tab" data-tab="addRecipe">Add Recipe</button>
+      <button class="tab" data-tab="authors">Authors</button>
+      <button class="tab" data-tab="addAuthor">Become an Author</button>
+      <div class="tab-indicator"></div>
+    </div>
+    <div class="tab-contents">
+      <div class="tab-content active" id="recipes">
         <h2>Recipes</h2>
         <div id="recipeList" class="grid"></div>
-
+      </div>
+      <div class="tab-content" id="addRecipe">
         <h2>Add New Recipe</h2>
         <form id="addRecipeForm">
-            <input type="text" id="recipeName" placeholder="Recipe Name" required>
-            <select id="recipeAuthor" required>
-                <option value="">Select Author</option>
-            </select>
-            <input type="text" id="recipeImage" placeholder="Image URL">
-            <textarea id="recipeIngredients" placeholder="Ingredients (one per line)" required></textarea>
-            <textarea id="recipeSteps" placeholder="Steps (one per line)" required></textarea>
-            <button type="submit">Add Recipe</button>
+          <input type="text" id="recipeName" placeholder="Recipe Name" required>
+          <select id="recipeAuthor" required>
+            <option value="">Select Author</option>
+          </select>
+          <input type="text" id="recipeImage" placeholder="Image URL">
+          <textarea id="recipeIngredients" placeholder="Ingredients (one per line)" required></textarea>
+          <textarea id="recipeSteps" placeholder="Steps (one per line)" required></textarea>
+          <button type="submit">Add Recipe</button>
         </form>
-
+      </div>
+      <div class="tab-content" id="authors">
         <h2>Authors</h2>
         <div id="authorList" class="grid"></div>
-
+      </div>
+      <div class="tab-content" id="addAuthor">
         <h2>Become an Author</h2>
         <form id="addAuthorForm">
-            <input type="text" id="authorName" placeholder="Your Name" required>
-            <textarea id="authorBio" placeholder="Tell us about yourself" required></textarea>
-            <input type="email" id="authorEmail" placeholder="Your Email" required>
-            <button type="submit">Join Chomp</button>
+          <input type="text" id="authorName" placeholder="Your Name" required>
+          <textarea id="authorBio" placeholder="Tell us about yourself" required></textarea>
+          <input type="email" id="authorEmail" placeholder="Your Email" required>
+          <button type="submit">Join Chomp</button>
         </form>
+      </div>
     </div>
-
-    <div id="recipeModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div id="recipeDetails"></div>
-            <h3>Reviews</h3>
-            <div id="reviewsList"></div>
-            <h4>Add a Review</h4>
-            <form id="addReviewForm">
-                <input type="text" id="reviewUser" placeholder="Your Name" required>
-                <input type="number" id="reviewRating" min="1" max="5" placeholder="Rating (1-5)" required>
-                <textarea id="reviewComment" placeholder="Your comment" required></textarea>
-                <button type="submit">Submit Review</button>
-            </form>
-        </div>
+  </div>
+  <div id="recipeModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="recipeDetails"></div>
+      <h3>Reviews</h3>
+      <div id="reviewsList"></div>
+      <h4>Add a Review</h4>
+      <form id="addReviewForm">
+        <input type="text" id="reviewUser" placeholder="Your Name" required>
+        <input type="number" id="reviewRating" min="1" max="5" placeholder="Rating (1-5)" required>
+        <textarea id="reviewComment" placeholder="Your comment" required></textarea>
+        <button type="submit">Submit Review</button>
+      </form>
     </div>
-
-    <div id="authorModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div id="authorDetails"></div>
-        </div>
+  </div>
+  <div id="authorModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="authorDetails"></div>
     </div>
-
-    <script>
-        const API_URL = 'https://chomp.onrender.com';
-        let currentRecipeId = null;
-
-        function fetchRecipes() {
-            fetch(`${API_URL}/recipes`)
-                .then(response => response.json())
-                .then(recipes => {
-                    const recipeList = document.getElementById('recipeList');
-                    recipeList.innerHTML = recipes.map(recipe => `
-                        <div class="card fade-in" data-id="${recipe._id}">
-                            <div class="card-content">
-                                <h3>${recipe.name}</h3>
-                                <p><strong>By:</strong> ${recipe.author ? recipe.author.name : 'Unknown'}</p>
-                                <button class="view-recipe">View Recipe</button>
-                                <button class="delete-recipe delete-btn">Delete Recipe</button>
-                            </div>
-                        </div>
-                    `).join('');
-
-                    document.querySelectorAll('.view-recipe').forEach(button => {
-                        button.addEventListener('click', (e) => {
-                            const recipeId = e.target.closest('.card').dataset.id;
-                            openRecipeModal(recipeId);
-                        });
-                    });
-
-                    document.querySelectorAll('.delete-recipe').forEach(button => {
-                        button.addEventListener('click', (e) => {
-                            const recipeId = e.target.closest('.card').dataset.id;
-                            deleteRecipe(recipeId);
-                        });
-                    });
-                })
-                .catch(error => console.error('Error fetching recipes:', error));
-        }
-
-        function fetchAuthors() {
-            fetch(`${API_URL}/authors`)
-                .then(response => response.json())
-                .then(authors => {
-                    const authorList = document.getElementById('authorList');
-                    authorList.innerHTML = authors.map(author => `
-                        <div class="card fade-in">
-                            <div class="card-content">
-                                <h3>${author.name}</h3>
-                                <p>${author.bio}</p>
-                                <p><strong>Email:</strong> ${author.email}</p>
-                                <button class="view-author" data-id="${author._id}">View Profile</button>
-                                <button class="delete-author delete-btn" data-id="${author._id}">Delete Author</button>
-                            </div>
-                        </div>
-                    `).join('');
-
-                    document.querySelectorAll('.view-author').forEach(button => {
-                        button.addEventListener('click', (e) => {
-                            const authorId = e.target.dataset.id;
-                            openAuthorModal(authorId);
-                        });
-                    });
-
-                    document.querySelectorAll('.delete-author').forEach(button => {
-                        button.addEventListener('click', (e) => {
-                            const authorId = e.target.dataset.id;
-                            deleteAuthor(authorId);
-                        });
-                    });
-
-                    const authorSelect = document.getElementById('recipeAuthor');
-                    authorSelect.innerHTML = '<option value="">Select Author</option>' + 
-                        authors.map(author => `<option value="${author._id}">${author.name}</option>`).join('');
-                })
-                .catch(error => console.error('Error fetching authors:', error));
-        }
-
-        function openRecipeModal(recipeId) {
-            currentRecipeId = recipeId;
-            fetch(`${API_URL}/recipes/${recipeId}`)
-                .then(response => response.json())
-                .then(recipe => {
-                    const recipeDetails = document.getElementById('recipeDetails');
-                    recipeDetails.innerHTML = `
-                        <h2>${recipe.name}</h2>
-                        ${recipe.image ? `<img src="${recipe.image}" alt="${recipe.name}" class="recipe-image">` : ''}
-                        <p><strong>By:</strong> ${recipe.author ? recipe.author.name : 'Unknown'}</p>
-                        <h3>Ingredients:</h3>
-                        <ul>${recipe.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}</ul>
-                        <h3>Steps:</h3>
-                        <ol>${recipe.steps.map(step => `<li>${step}</li>`).join('')}</ol>
-                    `;
-                    fetchReviews(recipeId);
-                    document.getElementById('recipeModal').style.display = 'block';
-                })
-                .catch(error => console.error('Error fetching recipe details:', error));
-        }
-
-        function openAuthorModal(authorId) {
-            fetch(`${API_URL}/authors/${authorId}`)
-                .then(response => response.json())
-                .then(author => {
-                    const authorDetails = document.getElementById('authorDetails');
-                    authorDetails.innerHTML = `
-                        <h2>${author.name}</h2>
-                        <p><strong>Email:</strong> ${author.email}</p>
-                        <p><strong>Bio:</strong> ${author.bio}</p>
-                    `;
-                    document.getElementById('authorModal').style.display = 'block';
-                })
-                .catch(error => console.error('Error fetching author details:', error));
-        }
-
-        function fetchReviews(recipeId) {
-            fetch(`${API_URL}/recipes/${recipeId}/reviews`)
-                .then(response => response.json())
-                .then(reviews => {
-                    const reviewsList = document.getElementById('reviewsList');
-                    reviewsList.innerHTML = reviews.map(review => `
-                        <div class="review fade-in">
-                            <p><strong>${review.user}</strong> rated it ${review.rating}/5</p>
-                            <p>${review.comment}</p>
-                            <button class="delete-review delete-btn" data-id="${review._id}">Delete Review</button>
-                        </div>
-                    `).join('');
-
-                    document.querySelectorAll('.delete-review').forEach(button => {
-                        button.addEventListener('click', (e) => {
-                            const reviewId = e.target.dataset.id;
-                            deleteReview(recipeId, reviewId);
-                        });
-                    });
-                })
-                .catch(error => console.error('Error fetching reviews:', error));
-        }
-
-        function deleteRecipe(recipeId) {
-            if (confirm('Are you sure you want to delete this recipe?')) {
-                fetch(`${API_URL}/recipes/${recipeId}`, { method: 'DELETE' })
-                    .then(response => response.text())
-                    .then(data => {
-                        console.log('Success:', data);
-                        fetchRecipes();
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-            }
-        }
-
-        function deleteReview(recipeId, reviewId) {
-            if (confirm('Are you sure you want to delete this review?')) {
-                fetch(`${API_URL}/reviews/${recipeId}/${reviewId}`, { method: 'DELETE' })
-                    .then(response => response.text())
-                    .then(data => {
-                        console.log('Success:', data);
-                        fetchReviews(recipeId);
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-            }
-        }
-
-        function deleteAuthor(authorId) {
-            if (confirm('Are you sure you want to delete this author? This will also delete all their recipes.')) {
-                fetch(`${API_URL}/authors/${authorId}`, { method: 'DELETE' })
-                    .then(response => response.text())
-                    .then(data => {
-                        console.log('Success:', data);
-                        fetchAuthors();
-                        fetchRecipes();
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-            }
-        }
-
-        document.getElementById('addRecipeForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const recipe = {
-                name: document.getElementById('recipeName').value,
-                author: document.getElementById('recipeAuthor').value,
-                image: document.getElementById('recipeImage').value,
-                ingredients: document.getElementById('recipeIngredients').value.split('\n').map(item => item.trim()),
-                steps: document.getElementById('recipeSteps').value.split('\n').map(item => item.trim())
-            };
-            fetch(`${API_URL}/recipes`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(recipe),
-            })
-            .then(response => response.text())
-            .then(data => {
-                console.log('Success:', data);
-                fetchRecipes();
-                this.reset();
-            })
-            .catch((error) => {
-                console.error('Error:', error);
+  </div>
+  <script>
+    const API_URL = 'https://chomp.onrender.com';
+    let currentRecipeId = null;
+    function fetchRecipes() {
+      fetch(`${API_URL}/recipes`)
+        .then(response => response.json())
+        .then(recipes => {
+          const recipeList = document.getElementById('recipeList');
+          recipeList.innerHTML = recipes.map(recipe => `
+            <div class="card fade-in" data-id="${recipe._id}">
+              <div class="card-content">
+                <h3>${recipe.name}</h3>
+                <p><strong>By:</strong> ${recipe.author ? recipe.author.name : 'Unknown'}</p>
+                <div class="button-container">
+                  <button class="view-recipe user-btn">View Recipe</button>
+                  <button class="delete-recipe delete-btn user-btn">Delete Recipe</button>
+                </div>
+              </div>
+            </div>
+          `).join('');
+          document.querySelectorAll('.view-recipe').forEach(button => {
+            button.addEventListener('click', e => {
+              const recipeId = e.target.closest('.card').dataset.id;
+              openRecipeModal(recipeId);
             });
-        });
-
-        document.getElementById('addAuthorForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const author = {
-                name: document.getElementById('authorName').value,
-                bio: document.getElementById('authorBio').value,
-                email: document.getElementById('authorEmail').value
-            };
-            fetch(`${API_URL}/authors`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(author),
-            })
-            .then(response => response.text())
-            .then(data => {
-                console.log('Success:', data);
-                fetchAuthors();
-                this.reset();
-            })
-            .catch((error) => {
-                console.error('Error:', error);
+          });
+          document.querySelectorAll('.delete-recipe').forEach(button => {
+            button.addEventListener('click', e => {
+              const recipeId = e.target.closest('.card').dataset.id;
+              deleteRecipe(recipeId);
             });
-        });
-
-        document.getElementById('addReviewForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const review = {
-                user: document.getElementById('reviewUser').value,
-                rating: parseInt(document.getElementById('reviewRating').value),
-                comment: document.getElementById('reviewComment').value
-            };
-            fetch(`${API_URL}/recipes/${currentRecipeId}/reviews`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(review),
-            })
-            .then(response => response.text())
-            .then(data => {
-                console.log('Success:', data);
-                fetchReviews(currentRecipeId);
-                this.reset();
-            })
-            .catch((error) => {
-                console.error('Error:', error);
+          });
+        })
+        .catch(error => console.error('Error fetching recipes:', error));
+    }
+    function fetchAuthors() {
+      fetch(`${API_URL}/authors`)
+        .then(response => response.json())
+        .then(authors => {
+          const authorList = document.getElementById('authorList');
+          authorList.innerHTML = authors.map(author => `
+            <div class="card fade-in">
+              <div class="card-content">
+                <h3>${author.name}</h3>
+                <p>${author.bio}</p>
+                <p><strong>Email:</strong> ${author.email}</p>
+                <div class="button-container">
+                  <button class="view-author user-btn" data-id="${author._id}">View Profile</button>
+                  <button class="delete-author delete-btn user-btn" data-id="${author._id}">Delete Author</button>
+                </div>
+              </div>
+            </div>
+          `).join('');
+          document.querySelectorAll('.view-author').forEach(button => {
+            button.addEventListener('click', e => {
+              const authorId = e.target.dataset.id;
+              openAuthorModal(authorId);
             });
-        });
-
-        document.querySelectorAll('.close').forEach(closeBtn => {
-            closeBtn.onclick = function() {
-                document.getElementById('recipeModal').style.display = 'none';
-                document.getElementById('authorModal').style.display = 'none';
-            }
-        });
-
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('recipeModal')) {
-                document.getElementById('recipeModal').style.display = 'none';
-            }
-            if (event.target == document.getElementById('authorModal')) {
-                document.getElementById('authorModal').style.display = 'none';
-            }
-        }
-
-        fetchRecipes();
-        fetchAuthors();
-    </script>
+          });
+          document.querySelectorAll('.delete-author').forEach(button => {
+            button.addEventListener('click', e => {
+              const authorId = e.target.dataset.id;
+              deleteAuthor(authorId);
+            });
+          });
+          const authorSelect = document.getElementById('recipeAuthor');
+          authorSelect.innerHTML = '<option value="">Select Author</option>' + authors.map(author => `<option value="${author._id}">${author.name}</option>`).join('');
+        })
+        .catch(error => console.error('Error fetching authors:', error));
+    }
+    function openRecipeModal(recipeId) {
+      currentRecipeId = recipeId;
+      fetch(`${API_URL}/recipes/${recipeId}`)
+        .then(response => response.json())
+        .then(recipe => {
+          const recipeDetails = document.getElementById('recipeDetails');
+          recipeDetails.innerHTML = `
+            <h2>${recipe.name}</h2>
+            ${recipe.image ? `<img src="${recipe.image}" alt="${recipe.name}" class="recipe-image">` : ''}
+            <p><strong>By:</strong> ${recipe.author ? recipe.author.name : 'Unknown'}</p>
+            <h3>Ingredients:</h3>
+            <ul>${recipe.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}</ul>
+            <h3>Steps:</h3>
+            <ol>${recipe.steps.map(step => `<li>${step}</li>`).join('')}</ol>
+          `;
+          fetchReviews(recipeId);
+          document.getElementById('recipeModal').style.display = 'block';
+        })
+        .catch(error => console.error('Error fetching recipe details:', error));
+    }
+    function openAuthorModal(authorId) {
+      fetch(`${API_URL}/authors/${authorId}`)
+        .then(response => response.json())
+        .then(author => {
+          const authorDetails = document.getElementById('authorDetails');
+          authorDetails.innerHTML = `<h2>${author.name}</h2><p><strong>Email:</strong> ${author.email}</p><p><strong>Bio:</strong> ${author.bio}</p>`;
+          document.getElementById('authorModal').style.display = 'block';
+        })
+        .catch(error => console.error('Error fetching author details:', error));
+    }
+    function fetchReviews(recipeId) {
+      fetch(`${API_URL}/recipes/${recipeId}/reviews`)
+        .then(response => response.json())
+        .then(reviews => {
+          const reviewsList = document.getElementById('reviewsList');
+          reviewsList.innerHTML = reviews.map(review => `
+            <div class="review fade-in">
+              <p><strong>${review.user}</strong> rated it ${review.rating}/5</p>
+              <p>${review.comment}</p>
+              <button class="delete-review delete-btn" data-id="${review._id}">Delete Review</button>
+            </div>
+          `).join('');
+          document.querySelectorAll('.delete-review').forEach(button => {
+            button.addEventListener('click', e => {
+              const reviewId = e.target.dataset.id;
+              deleteReview(recipeId, reviewId);
+            });
+          });
+        })
+        .catch(error => console.error('Error fetching reviews:', error));
+    }
+    function deleteRecipe(recipeId) {
+      if (confirm('Are you sure you want to delete this recipe?')) {
+        fetch(`${API_URL}/recipes/${recipeId}`, { method: 'DELETE' })
+          .then(response => response.text())
+          .then(data => {
+            console.log('Success:', data);
+            fetchRecipes();
+          })
+          .catch(error => console.error('Error:', error));
+      }
+    }
+    function deleteReview(recipeId, reviewId) {
+      if (confirm('Are you sure you want to delete this review?')) {
+        fetch(`${API_URL}/reviews/${recipeId}/${reviewId}`, { method: 'DELETE' })
+          .then(response => response.text())
+          .then(data => {
+            console.log('Success:', data);
+            fetchReviews(recipeId);
+          })
+          .catch(error => console.error('Error:', error));
+      }
+    }
+    function deleteAuthor(authorId) {
+      if (confirm('Are you sure you want to delete this author? This will also delete all their recipes.')) {
+        fetch(`${API_URL}/authors/${authorId}`, { method: 'DELETE' })
+          .then(response => response.text())
+          .then(data => {
+            console.log('Success:', data);
+            fetchAuthors();
+            fetchRecipes();
+          })
+          .catch(error => console.error('Error:', error));
+      }
+    }
+    document.getElementById('addRecipeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const recipe = {
+        name: document.getElementById('recipeName').value,
+        author: document.getElementById('recipeAuthor').value,
+        image: document.getElementById('recipeImage').value,
+        ingredients: document.getElementById('recipeIngredients').value.split('\n').map(item => item.trim()),
+        steps: document.getElementById('recipeSteps').value.split('\n').map(item => item.trim())
+      };
+      fetch(`${API_URL}/recipes`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(recipe) })
+        .then(response => response.text())
+        .then(data => {
+          console.log('Success:', data);
+          fetchRecipes();
+          this.reset();
+        })
+        .catch(error => console.error('Error:', error));
+    });
+    document.getElementById('addAuthorForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const author = {
+        name: document.getElementById('authorName').value,
+        bio: document.getElementById('authorBio').value,
+        email: document.getElementById('authorEmail').value
+      };
+      fetch(`${API_URL}/authors`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(author) })
+        .then(response => response.text())
+        .then(data => {
+          console.log('Success:', data);
+          fetchAuthors();
+          this.reset();
+        })
+        .catch(error => console.error('Error:', error));
+    });
+    document.getElementById('addReviewForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const review = {
+        user: document.getElementById('reviewUser').value,
+        rating: parseInt(document.getElementById('reviewRating').value),
+        comment: document.getElementById('reviewComment').value
+      };
+      fetch(`${API_URL}/recipes/${currentRecipeId}/reviews`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(review) })
+        .then(response => response.text())
+        .then(data => {
+          console.log('Success:', data);
+          fetchReviews(currentRecipeId);
+          this.reset();
+        })
+        .catch(error => console.error('Error:', error));
+    });
+    document.querySelectorAll('.close').forEach(closeBtn => {
+      closeBtn.onclick = function() {
+        document.getElementById('recipeModal').style.display = 'none';
+        document.getElementById('authorModal').style.display = 'none';
+      }
+    });
+    window.onclick = function(event) {
+      if (event.target == document.getElementById('recipeModal')) {
+        document.getElementById('recipeModal').style.display = 'none';
+      }
+      if (event.target == document.getElementById('authorModal')) {
+        document.getElementById('authorModal').style.display = 'none';
+      }
+    };
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const tabIndicator = document.querySelector('.tab-indicator');
+    function updateIndicator(element) {
+      tabIndicator.style.width = element.offsetWidth + 'px';
+      tabIndicator.style.left = element.offsetLeft + 'px';
+    }
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById(this.getAttribute('data-tab')).classList.add('active');
+        updateIndicator(this);
+      });
+    });
+    window.addEventListener('resize', function() {
+      const activeTab = document.querySelector('.tab.active');
+      if (activeTab) { updateIndicator(activeTab); }
+    });
+    window.addEventListener('load', function() {
+      const activeTab = document.querySelector('.tab.active');
+      if (activeTab) { updateIndicator(activeTab); }
+    });
+    fetchRecipes();
+    fetchAuthors();
+  </script>
 </body>
 </html>
