@@ -35,6 +35,10 @@ const authorSchema = new mongoose.Schema({
 const Recipe = mongoose.model('Recipe', recipeSchema);
 const Author = mongoose.model('Author', authorSchema);
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the Chomp API! The frontend(test it from here) is at http://ayaangrover.is-a.dev/chomp/frontend, and the full code is at https://github.com/ayaangrover/chomp/.');
+});
+
 app.get('/recipes', async (req, res) => {
   try {
     const recipes = await Recipe.find().populate('author', 'name');
